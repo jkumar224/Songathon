@@ -4,6 +4,7 @@ import android.os.Bundle
 import android.util.Log
 import androidx.appcompat.app.AppCompatActivity
 import com.google.android.material.snackbar.Snackbar
+import com.google.firebase.database.*
 import com.spotify.android.appremote.api.ConnectionParams
 import com.spotify.android.appremote.api.Connector
 import com.spotify.android.appremote.api.SpotifyAppRemote
@@ -17,29 +18,90 @@ class MainActivity : AppCompatActivity() {
     private val redirectUri = "https://com.example.songathon/callback"
     private var spotifyAppRemote: SpotifyAppRemote? = null
 
+    val firebase = FirebaseDatabase.getInstance().reference
+    val userKey = "0"
 
+    data class User (
+            var ID : String ,
+            var name: String
+    )
 
+    fun writeToDatabase(firebaseDatabase: DatabaseReference) {
+        firebaseDatabase.child(
+            "/users/")
+        firebaseDatabase.child("/users/RaMGIFu7zgy2Y6pSHvDJ")
+    }
+
+    fun readFromDatabase(firebaseDatabase: DatabaseReference, id: String) {
+        println("read from database called")
+        Log.d("message",firebaseDatabase.child("/users/${id}").toString())
+    }
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
     }
+    var users = mutableListOf<User>()
+
+//    private fun initUsers() {
+//        val userListenener = object: ValueEventListener {
+//            override fun onDataChange(p0: DataSnapshot) {
+//                p0.children.mapNotNullTo(users){
+//                    it.getValue<User>
+//                }
+//                //To change body of created functions use File | Settings | File Templates.
+//            }
+//
+//            override fun onCancelled(p0: DatabaseError) {
+//                println("cancelled user ${p0.toException()}")
+//            }
+//        }
+//        firebase.child("Users").addListenerForSingleValueEvent(userListenener)
+//        firebase.child("Users").
+//    }
 
     override fun onStart() {
         // Set the connection parameters
         Log.d("MainActivity", "Line 31")
         super.onStart()
 
-        val progress = 0
+       // val progress = 0
+
+        // Initializing DB
+
+        //initUsers()
+
+
 
         button.setOnClickListener { view ->
-            Snackbar.make(view, "Button Clicked", Snackbar.LENGTH_LONG)
-                .setAction("Action", null).show()
-
+//            Snackbar.make(view, "Button Clicked", Snackbar.LENGTH_LONG)
+//                .setAction("Action", null).show()
+//            readFromDatabase(firebase,"RaMGIFu7zgy2Y6pSHvDJ")
+//            println(" Button clicked by users    === $users")
+//            println(users.size)
+            val user = User("1", "Justin")
+            firebase.child("Users").push().setValue(user)
         }
 
         button2.setOnClickListener { view ->
             Snackbar.make(view, "Button 2 Clicked", Snackbar.LENGTH_LONG)
                 .setAction("Action", null).show()
+            println(getUsers())
+//            println(" Button clicked by users    === $users")
+//            println(users.size)
+           val query = firebase.child("Users/").orderByKey()
+            query.addValueEventListener(object : ValueEventListener {
+                override fun onDataChange(dataSnapshot: DataSnapshot) {
+                    for(postSnapshot in dataSnapshot.children) {
+                        println(postSnapshot)
+                    }
+                }
+
+                override fun onCancelled(databaseError: DatabaseError) {
+                    Log.w("Something went wrong", "you are wrong") //To change body of created functions use File | Settings | File Templates.
+                }
+            })
+
+
         }
 
         button4.setOnClickListener { view ->
@@ -73,18 +135,20 @@ class MainActivity : AppCompatActivity() {
 
 
     private fun connected() {
-        spotifyAppRemote?.let {
-            // Play a playlist
-            val playlistURI = "spotify:playlist:37i9dQZF1DX2sUQwD7tbmL"
-            it.playerApi.play(playlistURI)
-            // Subscribe to PlayerState
-            it.playerApi.subscribeToPlayerState().setEventCallback {
-                val track: Track = it.track
-                Log.d("MainActivity", track.name + " by " + track.artist.name)
-            }
-        }
+//        spotifyAppRemote?.let {
+//            // Play a playlist
+//            val playlistURI = "spotify:playlist:37i9dQZF1DX2sUQwD7tbmL"
+//            it.playerApi.play(playlistURI)
+//            // Subscribe to PlayerState
+//            it.playerApi.subscribeToPlayerState().setEventCallback {
+//                val track: Track = it.track
+//                Log.d("MainActivity", track.name + " by " + track.artist.name)
+//            }
+//        }
 
     }
+
+    fun getUsers() = firebase.child("Users").limitToFirst(10)
 
     override fun onStop() {
         super.onStop()
