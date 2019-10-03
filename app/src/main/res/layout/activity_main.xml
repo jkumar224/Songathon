@@ -25,4 +25,8 @@
         android:text="@string/join_session"
         app:layout_constraintStart_toStartOf="@+id/button"
         app:layout_constraintTop_toBottomOf="@+id/button" />
+
+
+    <include layout="@layout/content_main" />
+
 </androidx.constraintlayout.widget.ConstraintLayout>
