@@ -1,16 +1,14 @@
 package com.example.songathon
 
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
-
-import com.spotify.android.appremote.api.ConnectionParams;
-import com.spotify.android.appremote.api.Connector;
-import com.spotify.android.appremote.api.SpotifyAppRemote;
-
-import com.spotify.protocol.client.Subscription;
-import com.spotify.protocol.types.PlayerState;
-import com.spotify.protocol.types.Track;
+import androidx.appcompat.app.AppCompatActivity
+import com.google.android.material.snackbar.Snackbar
+import com.spotify.android.appremote.api.ConnectionParams
+import com.spotify.android.appremote.api.Connector
+import com.spotify.android.appremote.api.SpotifyAppRemote
+import com.spotify.protocol.types.Track
+import kotlinx.android.synthetic.main.content_main.*
 
 class MainActivity : AppCompatActivity() {
 
@@ -30,6 +28,29 @@ class MainActivity : AppCompatActivity() {
         // Set the connection parameters
         Log.d("MainActivity", "Line 31")
         super.onStart()
+
+        val progress = 0
+
+        button.setOnClickListener { view ->
+            Snackbar.make(view, "Button Clicked", Snackbar.LENGTH_LONG)
+                .setAction("Action", null).show()
+
+        }
+
+        button2.setOnClickListener { view ->
+            Snackbar.make(view, "Button 2 Clicked", Snackbar.LENGTH_LONG)
+                .setAction("Action", null).show()
+        }
+
+        button4.setOnClickListener { view ->
+            Snackbar.make(view, "Button 4 Clicked", Snackbar.LENGTH_LONG)
+                .setAction("Action", null).show()
+        }
+        button5.setOnClickListener { view ->
+            Snackbar.make(view, "Button 5 Clicked", Snackbar.LENGTH_LONG)
+                .setAction("Action", null).show()
+        }
+
         // Set the connection parameters
         val connectionParams = ConnectionParams.Builder(clientId)
             .setRedirectUri(redirectUri)
