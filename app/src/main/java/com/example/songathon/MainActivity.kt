@@ -14,8 +14,8 @@ import com.spotify.protocol.types.Track;
 class MainActivity : AppCompatActivity() {
 
 
-    private val clientId ="02386d77c3a843468c2ecd788a64e4a2";
-    private val redirectUri = "https://com.spotify.android.songathon/callback"
+    private val clientId ="02386d77c3a843468c2ecd788a64e4a2"
+    private val redirectUri = "https://com.example.songathon/callback"
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -24,7 +24,7 @@ class MainActivity : AppCompatActivity() {
     }
 
     override fun onStart() {
-
+        super.onStart();
     }
 
     private fun connected() {
