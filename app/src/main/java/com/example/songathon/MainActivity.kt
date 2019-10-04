@@ -8,6 +8,7 @@ import com.google.firebase.database.*
 import com.spotify.android.appremote.api.ConnectionParams
 import com.spotify.android.appremote.api.Connector
 import com.spotify.android.appremote.api.SpotifyAppRemote
+import com.spotify.protocol.types.PlayerState
 import com.spotify.protocol.types.Track
 import kotlinx.android.synthetic.main.content_main.*
 
@@ -59,6 +60,42 @@ class MainActivity : AppCompatActivity() {
                 .setAction("Action", null).show()
             authenticateUser()
         }
+
+        firebase.child("Song State").addValueEventListener(object: ValueEventListener{
+            override fun onDataChange(p0: DataSnapshot) {
+                Log.d("MainActivity", "We are checking here")
+                val songState = p0.getValue(SongState::class.java)
+
+                songState?.let {
+                    when {
+                        it.pause -> {
+                            spotifyAppRemote?.playerApi?.playerState?.setResultCallback { pState ->
+                                when (pState.isPaused) {
+                                    true -> spotifyAppRemote?.playerApi?.resume()
+                                    false -> spotifyAppRemote?.playerApi?.pause()
+                                }
+                            }
+                        }
+                        it.setRepeat -> spotifyAppRemote?.playerApi?.setRepeat(1)
+                        it.skipPressed -> spotifyAppRemote?.playerApi?.skipNext()
+                        it.skipPrevious -> spotifyAppRemote?.playerApi?.skipPrevious()
+                        else -> {}
+                    }
+                }
+                spotifyAppRemote?.playerApi?.playerState?.setResultCallback { pState ->
+                    firebase.setSongInfo(SongInfo(
+                        isPaused = pState.isPaused,
+                        trackName = pState.track.name,
+                        trackArtist = pState.track.artist.name
+                    ))
+                }
+                firebase.setSongState(SongState())
+            }
+
+            override fun onCancelled(p0: DatabaseError) {
+                Log.d("MainActivty", "We failed trying to get listener")
+            }
+        })
 
         pause.setOnClickListener {pause()}
         skipNext.setOnClickListener {skippedPressed()}
