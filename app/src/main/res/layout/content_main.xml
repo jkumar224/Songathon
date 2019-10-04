@@ -10,95 +10,145 @@
     tools:showIn="@layout/activity_main"
     tools:visibility="visible">
 
+    <TextView
+        android:id="@+id/songName2"
+        android:layout_width="0dp"
+        android:layout_height="45dp"
+        android:layout_marginStart="7dp"
+        android:layout_marginLeft="7dp"
+        android:layout_marginTop="16dp"
+        android:layout_marginEnd="7dp"
+        android:layout_marginRight="7dp"
+        android:ems="10"
+        android:gravity="center"
+        android:inputType="textPersonName"
+        android:text="***  Welcome To Songathon ***"
+        android:textColor="#DA0707"
+        android:textSize="20sp"
+        android:textStyle="bold"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
     <Button
         android:id="@+id/authenticate"
-        android:layout_width="109dp"
+        android:layout_width="0dp"
         android:layout_height="48dp"
-        android:layout_marginStart="136dp"
-        android:layout_marginLeft="136dp"
-        android:layout_marginTop="120dp"
+        android:layout_marginStart="29dp"
+        android:layout_marginLeft="29dp"
+        android:layout_marginTop="65dp"
+        android:layout_marginEnd="29dp"
+        android:layout_marginRight="29dp"
+        android:layout_marginBottom="72dp"
         android:background="#D8B5D9"
         android:text="Auth"
-        app:layout_constraintBottom_toTopOf="@+id/pause"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.937" />
+        app:layout_constraintBottom_toBottomOf="@+id/pause"
+        app:layout_constraintEnd_toEndOf="@+id/artistName"
+        app:layout_constraintStart_toStartOf="@+id/artistName"
+        app:layout_constraintTop_toBottomOf="@+id/artistName" />
 
     <Button
         android:id="@+id/pause"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginEnd="44dp"
-        android:layout_marginRight="44dp"
         android:layout_marginBottom="20dp"
         android:background="#ECF9B5"
         android:text="pause"
         app:layout_constraintBottom_toTopOf="@+id/repeat"
-        app:layout_constraintEnd_toStartOf="@+id/skipNext" />
+        app:layout_constraintStart_toStartOf="@+id/repeat" />
 
     <Button
         android:id="@+id/skipPrevious"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginEnd="40dp"
-        android:layout_marginRight="40dp"
+        android:layout_marginStart="19dp"
+        android:layout_marginLeft="19dp"
         android:layout_marginBottom="64dp"
         android:background="#FFD1D8"
         android:text="prev"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toStartOf="@+id/pause" />
+        app:layout_constraintStart_toStartOf="parent" />
 
     <Button
         android:id="@+id/skipNext"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginStart="44dp"
+        android:layout_marginLeft="44dp"
         android:layout_marginEnd="44dp"
         android:layout_marginRight="44dp"
-        android:layout_marginBottom="64dp"
         android:background="#BBECC1"
         android:text="next"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent" />
+        app:layout_constraintBaseline_toBaselineOf="@+id/repeat"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/repeat" />
 
     <Button
         android:id="@+id/repeat"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="64dp"
+        android:layout_marginStart="40dp"
+        android:layout_marginLeft="40dp"
         android:background="#FFE9D1"
         android:text="repeat"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.455"
-        app:layout_constraintStart_toStartOf="parent" />
+        app:layout_constraintStart_toEndOf="@+id/skipPrevious"
+        app:layout_constraintTop_toTopOf="@+id/skipPrevious" />
 
-    <FrameLayout
-        android:id="@+id/frameLayout"
-        android:layout_width="0dp"
-        android:layout_height="0dp"
-        android:layout_marginTop="1dp"
-        android:layout_marginBottom="1dp"
-        android:background="#75C5EEEE"
-        android:visibility="visible"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
+    Song :
+
+    <TextView
+        android:id="@+id/songName"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="107dp"
+        android:layout_marginLeft="107dp"
+        android:layout_marginTop="327dp"
+        android:ems="10"
+        android:inputType="textPersonName"
+        android:text="Name"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        tools:visibility="visible">
+        app:layout_constraintTop_toTopOf="parent" />
 
-        <EditText
-            android:id="@+id/editText2"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:ems="10"
-            android:gravity="center|center_vertical"
-            android:inputType="textPersonName"
-            android:text="***WELCOME TO SONGATHON***"
-            android:textAllCaps="true"
-            android:textColor="#860101"
-            android:textSize="20sp"
-            android:textStyle="bold" />
-    </FrameLayout>
+    Artist :
+
+    <TextView
+        android:id="@+id/artistName"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="18dp"
+        android:layout_marginLeft="18dp"
+        android:layout_marginTop="40dp"
+        android:ems="10"
+        android:inputType="textPersonName"
+        android:text="Name"
+        app:layout_constraintStart_toEndOf="@+id/artistName2"
+        app:layout_constraintTop_toBottomOf="@+id/artistName3" />
+
+    <TextView
+        android:id="@+id/artistName2"
+        android:layout_width="0dp"
+        android:layout_height="25dp"
+        android:ems="10"
+        android:inputType="textPersonName"
+        android:text="Artist"
+        app:layout_constraintBaseline_toBaselineOf="@+id/artistName"
+        app:layout_constraintEnd_toEndOf="@+id/artistName3"
+        app:layout_constraintStart_toStartOf="@+id/artistName3" />
+
+    <TextView
+        android:id="@+id/artistName3"
+        android:layout_width="0dp"
+        android:layout_height="28dp"
+        android:layout_marginStart="26dp"
+        android:layout_marginLeft="26dp"
+        android:layout_marginEnd="17dp"
+        android:layout_marginRight="17dp"
+        android:ems="10"
+        android:inputType="textPersonName"
+        android:text="Song"
+        app:layout_constraintBaseline_toBaselineOf="@+id/songName"
+        app:layout_constraintEnd_toStartOf="@+id/songName"
+        app:layout_constraintStart_toStartOf="parent" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

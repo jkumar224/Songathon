@@ -9,7 +9,6 @@ import com.spotify.android.appremote.api.ConnectionParams
 import com.spotify.android.appremote.api.Connector
 import com.spotify.android.appremote.api.SpotifyAppRemote
 import com.spotify.protocol.types.ImageUri
-import com.spotify.protocol.types.Track
 import kotlinx.android.synthetic.main.content_main.*
 
 class MainActivity : AppCompatActivity() {
@@ -97,13 +96,17 @@ class MainActivity : AppCompatActivity() {
         firebase.child("Song Info").addValueEventListener(object: ValueEventListener {
             override fun onDataChange(p0: DataSnapshot) {
                 currentSongInfo = p0.getValue(SongInfo::class.java)
+                songName.text = currentSongInfo?.trackName
+                artistName.text = currentSongInfo?.trackArtist
                 println(currentSongInfo)
+
             }
 
             override fun onCancelled(p0: DatabaseError) {
                 Log.d("MainActivity", p0.message)
             }
         })
+
 
         pause.setOnClickListener { view ->
             Snackbar.make(view, "Pausing", Snackbar.LENGTH_LONG)
