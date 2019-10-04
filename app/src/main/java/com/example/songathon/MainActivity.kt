@@ -8,6 +8,7 @@ import com.google.firebase.database.*
 import com.spotify.android.appremote.api.ConnectionParams
 import com.spotify.android.appremote.api.Connector
 import com.spotify.android.appremote.api.SpotifyAppRemote
+import com.spotify.protocol.types.ImageUri
 import com.spotify.protocol.types.Track
 import kotlinx.android.synthetic.main.content_main.*
 
@@ -37,7 +38,8 @@ class MainActivity : AppCompatActivity() {
     data class SongInfo(
         var isPaused: Boolean = true,
         var trackName: String? = null,
-        var trackArtist: String? = null
+        var trackArtist: String? = null,
+        var imageUri: ImageUri? = null
     )
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -172,7 +174,8 @@ class MainActivity : AppCompatActivity() {
                 firebase.setSongInfo(SongInfo(
                     isPaused = state.isPaused,
                     trackName = state.track.name,
-                    trackArtist = state.track.artist.name
+                    trackArtist = state.track.artist.name,
+                    imageUri = state.track.imageUri
                 ))
             }
         }
