@@ -93,7 +93,7 @@
             android:ems="10"
             android:gravity="center|center_vertical"
             android:inputType="textPersonName"
-            android:text="***WELCOME TO SONGATHON***"
+            android:text="*** WELCOME TO SONGATHON ***"
             android:textAllCaps="true"
             android:textColor="#860101"
             android:textSize="20sp"
