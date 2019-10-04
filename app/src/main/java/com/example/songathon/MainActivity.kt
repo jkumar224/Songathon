@@ -19,7 +19,7 @@ class MainActivity : AppCompatActivity() {
     private var spotifyAppRemote: SpotifyAppRemote? = null
     private var isAdminOfSession = false
 
-    val firebase = FirebaseDatabase.getInstance().reference
+    val firebase: DatabaseReference = FirebaseDatabase.getInstance().reference
     private var userKey: String? = null
 
     data class User (
@@ -39,16 +39,6 @@ class MainActivity : AppCompatActivity() {
         var trackArtist: String? = null
     )
 
-    fun writeToDatabase(firebaseDatabase: DatabaseReference) {
-        firebaseDatabase.child(
-            "/users/")
-        firebaseDatabase.child("/users/RaMGIFu7zgy2Y6pSHvDJ")
-    }
-
-    fun readFromDatabase(firebaseDatabase: DatabaseReference, id: String) {
-        println("read from database called")
-        Log.d("message",firebaseDatabase.child("/users/${id}").toString())
-    }
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
@@ -62,15 +52,33 @@ class MainActivity : AppCompatActivity() {
         val newRef = firebase.child("Users").push()
         this.userKey = newRef.key
         newRef.setValue(user)
-
-
+        firebase.child("Song State").setValue(SongState())
 
         authenticate.setOnClickListener { view ->
             Snackbar.make(view, "Button Clicked", Snackbar.LENGTH_LONG)
                 .setAction("Action", null).show()
             authenticateUser()
         }
+
+        pause.setOnClickListener {pause()}
+        skipNext.setOnClickListener {skippedPressed()}
+        skipPrevious.setOnClickListener {skipPrevious()}
+        repeat.setOnClickListener {setRepeat()}
     }
+
+    private fun pause() = firebase.setSongState(SongState(pause = true))
+
+    private fun skippedPressed() = firebase.setSongState(SongState(skipPressed = true))
+
+    private fun skipPrevious() = firebase.setSongState(SongState(skipPrevious = true))
+
+    private fun setRepeat() = firebase.setSongState(SongState(setRepeat = true))
+
+    private fun DatabaseReference.setSongState(state: SongState) =
+        this.child("Song State").setValue(state)
+
+    private fun DatabaseReference.setSongInfo(state: SongInfo) =
+        this.child("Song Info").setValue(state)
 
     private fun authenticateUser() {
         val connectionParams = ConnectionParams.Builder(clientId)
@@ -108,7 +116,7 @@ class MainActivity : AppCompatActivity() {
                 Log.d("MainActivity", track.name + " by " + track.artist.name)
                 songInfo.trackName = track.name
                 songInfo.trackArtist = track.artist.name
-                firebase.child("Song Info").setValue(songInfo)
+                firebase.setSongInfo(songInfo)
             }
         }
 
