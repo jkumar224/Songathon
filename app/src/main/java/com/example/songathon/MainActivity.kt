@@ -26,17 +26,17 @@ class MainActivity : AppCompatActivity() {
             var isAdmin: Boolean
     )
 
-    data class songState(
+    data class SongState(
         var pause: Boolean = false,
         var skipPressed: Boolean = false,
         var skipPrevious: Boolean = false,
         var setRepeat: Boolean = false
     )
 
-    data class songInfo(
-        var isPlaying: Boolean = false,
-        var trackName: String,
-        var trackArtist: String
+    data class SongInfo(
+        var isPaused: Boolean = true,
+        var trackName: String? = null,
+        var trackArtist: String? = null
     )
 
     fun writeToDatabase(firebaseDatabase: DatabaseReference) {
@@ -91,18 +91,24 @@ class MainActivity : AppCompatActivity() {
                 // Something went wrong when attempting to connect! Handle errors here
             }
         })
+
     }
 
 
     private fun connected() {
         spotifyAppRemote?.let {
             // Play a playlist
+            var songInfo = SongInfo()
             val playlistURI = "spotify:playlist:37i9dQZF1DX2sUQwD7tbmL"
             it.playerApi.play(playlistURI)
             // Subscribe to PlayerState
             it.playerApi.subscribeToPlayerState().setEventCallback {
+                songInfo.isPaused = it.isPaused
                 val track: Track = it.track
                 Log.d("MainActivity", track.name + " by " + track.artist.name)
+                songInfo.trackName = track.name
+                songInfo.trackArtist = track.artist.name
+                firebase.child("Song Info").setValue(songInfo)
             }
         }
 
