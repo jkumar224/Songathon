@@ -19,11 +19,10 @@ class MainActivity : AppCompatActivity() {
     private var spotifyAppRemote: SpotifyAppRemote? = null
 
     val firebase = FirebaseDatabase.getInstance().reference
-    val userKey = "0"
+    private var userKey: String? = null
 
     data class User (
-            var ID : String ,
-            var name: String
+            var isAdmin: Boolean
     )
 
     fun writeToDatabase(firebaseDatabase: DatabaseReference) {
@@ -63,23 +62,19 @@ class MainActivity : AppCompatActivity() {
         // Set the connection parameters
         Log.d("MainActivity", "Line 31")
         super.onStart()
-
-       // val progress = 0
-
-        // Initializing DB
-
-        //initUsers()
+        val user = User(false)
+        val newRef = firebase.child("Users").push()
+        this.userKey = newRef.key
+        newRef.setValue(user)
 
 
 
         button.setOnClickListener { view ->
-//            Snackbar.make(view, "Button Clicked", Snackbar.LENGTH_LONG)
-//                .setAction("Action", null).show()
+            Snackbar.make(view, "Button Clicked", Snackbar.LENGTH_LONG)
+                .setAction("Action", null).show()
 //            readFromDatabase(firebase,"RaMGIFu7zgy2Y6pSHvDJ")
 //            println(" Button clicked by users    === $users")
 //            println(users.size)
-            val user = User("1", "Justin")
-            firebase.child("Users").push().setValue(user)
         }
 
         button2.setOnClickListener { view ->
@@ -154,6 +149,9 @@ class MainActivity : AppCompatActivity() {
         super.onStop()
         spotifyAppRemote?.let {
             SpotifyAppRemote.disconnect(it)
+        }
+        userKey?.let {
+            firebase.child("Users").child(it).removeValue()
         }
     }
 }
