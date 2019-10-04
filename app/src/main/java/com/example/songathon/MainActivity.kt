@@ -62,19 +62,24 @@ class MainActivity : AppCompatActivity() {
         }
 
         pause.setOnClickListener { view ->
-            Snackbar.make(view, "Pause Clicked", Snackbar.LENGTH_LONG)
+            Snackbar.make(view, "Pausing", Snackbar.LENGTH_LONG)
+                .setAction("Action", null).show()
             pause()
         }
+
         skipNext.setOnClickListener { view ->
-            Snackbar.make(view, "Next Clicked", Snackbar.LENGTH_LONG)
+            Snackbar.make(view, "Next-ing", Snackbar.LENGTH_LONG)
+                .setAction("Action", null).show()
             skippedPressed()
         }
         skipPrevious.setOnClickListener { view ->
-            Snackbar.make(view, "Previous Clicked", Snackbar.LENGTH_LONG)
+            Snackbar.make(view, "Previous-ing", Snackbar.LENGTH_LONG)
+                .setAction("Action", null).show()
             skipPrevious()
         }
         repeat.setOnClickListener { view ->
-            Snackbar.make(view, "Repeat Clicked", Snackbar.LENGTH_LONG)
+            Snackbar.make(view, "Repeat-ing", Snackbar.LENGTH_LONG)
+                .setAction("Action", null).show()
             setRepeat()
         }
     }
