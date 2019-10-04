@@ -4,7 +4,8 @@ import android.os.Bundle
 import android.util.Log
 import androidx.appcompat.app.AppCompatActivity
 import com.google.android.material.snackbar.Snackbar
-import com.google.firebase.database.*
+import com.google.firebase.database.DatabaseReference
+import com.google.firebase.database.FirebaseDatabase
 import com.spotify.android.appremote.api.ConnectionParams
 import com.spotify.android.appremote.api.Connector
 import com.spotify.android.appremote.api.SpotifyAppRemote
@@ -55,15 +56,27 @@ class MainActivity : AppCompatActivity() {
         firebase.child("Song State").setValue(SongState())
 
         authenticate.setOnClickListener { view ->
-            Snackbar.make(view, "Button Clicked", Snackbar.LENGTH_LONG)
+            Snackbar.make(view, "Authenticate Clicked", Snackbar.LENGTH_LONG)
                 .setAction("Action", null).show()
             authenticateUser()
         }
 
-        pause.setOnClickListener {pause()}
-        skipNext.setOnClickListener {skippedPressed()}
-        skipPrevious.setOnClickListener {skipPrevious()}
-        repeat.setOnClickListener {setRepeat()}
+        pause.setOnClickListener { view ->
+            Snackbar.make(view, "Pause Clicked", Snackbar.LENGTH_LONG)
+            pause()
+        }
+        skipNext.setOnClickListener { view ->
+            Snackbar.make(view, "Next Clicked", Snackbar.LENGTH_LONG)
+            skippedPressed()
+        }
+        skipPrevious.setOnClickListener { view ->
+            Snackbar.make(view, "Previous Clicked", Snackbar.LENGTH_LONG)
+            skipPrevious()
+        }
+        repeat.setOnClickListener { view ->
+            Snackbar.make(view, "Repeat Clicked", Snackbar.LENGTH_LONG)
+            setRepeat()
+        }
     }
 
     private fun pause() = firebase.setSongState(SongState(pause = true))
